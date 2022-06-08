@@ -1,0 +1,18 @@
+﻿@using FirstWebApplication.Models
+@model List<UserModel>
+
+<table class="table">
+    <tr class="firstRow">
+        <th>Id</th>
+        <th>Name</th>
+        <th>More Info</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.Name</td>
+            <td><a asp-area="" asp-controller="User" asp-action="Find" asp-route-specific="@user.Id">More info</a></td>
+        </tr>
+    }
+</table>
