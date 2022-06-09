@@ -6,11 +6,15 @@
         <th>Name</th>
         <th>Email</th>
         <th>Phone</th>
+        <th></th>
     </tr>
     <tr>
         <td>@Model.Id</td>
         <td>@Model.Name</td>
         <td>@Model.Email</td>
         <td>@Model.Phone</td>
+        <td>
+          <a asp-controller="User" asp-action="Show">Back</a>
+        </td>
     </tr>
 </table>

@@ -5,29 +5,29 @@ namespace FirstWebApplication.Controllers
 {
     public class UserController : Controller
     {
-        List<UserModel> userModels;
+        public static List<UserModel> userModels = new List<UserModel>();
 
-        public UserController()
+        [HttpGet]
+        public IActionResult CreateFromScaffold()
         {
-            userModels = new List<UserModel>
+            var user = new UserModel
             {
-                new UserModel
-                {
-                    Id = 1,
-                    Name = "Valerijs",
-                    Email = "virtuoso292@gmail.com",
-                    Phone = "27793783"
-                },
-                new UserModel
-                {
-                    Id = 2,
-                    Name = "Clara",
-                    Email = "clara.smith@gmail.com",
-                    Phone = "449158190"
-                }
+                Id = userModels.Count + 1
             };
+            return View(user);
         }
 
+        [HttpPost]
+        public IActionResult CreateFromScaffold(UserModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                userModels.Add(user);
+                return RedirectToAction("Show");
+            }
+
+            return View(user);
+        }
 
         // webadress.com/User/Show/
         public IActionResult Show()
@@ -35,7 +35,7 @@ namespace FirstWebApplication.Controllers
             return View(userModels);
         }
 
-
+   
         // webadress.com/User/Find/id
         public IActionResult Find(int specific)
         {
@@ -50,6 +50,29 @@ namespace FirstWebApplication.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var user = new UserModel
+            {
+                Id = userModels.Count + 1
+            };
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult Create(UserModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                userModels.Add(user);
+                return RedirectToAction("Show");
+            }
+
+            return View(user);
         }
     }
 }

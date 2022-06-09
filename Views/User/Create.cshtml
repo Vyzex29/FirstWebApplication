@@ -1,0 +1,20 @@
+﻿@model UserModel
+
+<p>UserId: @Model.Id</p>
+<form class="col-6" asp-controller="User" asp-action="Create" method="post">
+    @Html.HiddenFor(Model => Model.Id)
+   <div class="mb-3">
+    <label asp-for="Name" class="form-label">Name</label>
+    <input asp-for="Name" type="text" class="form-control">
+    @Html.ValidationMessageFor(a=> a.Name)
+  </div>
+  <div class="mb-3">
+    <label asp-for="Email"  class="form-label">Email address</label>
+    <input asp-for="Email" type="email" class="form-control" aria-describedby="emailHelp">
+  </div>
+  <div class="mb-3">
+    <label asp-for="Phone" class="form-label">Phone</label>
+    <input asp-for="Phone" type="text" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
