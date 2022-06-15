@@ -1,4 +1,5 @@
-﻿using FirstWebApplication.Models;
+﻿using FirstWebApplication.DB;
+using FirstWebApplication.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FirstWebApplication.Controllers
@@ -32,7 +33,19 @@ namespace FirstWebApplication.Controllers
         // webadress.com/User/Show/
         public IActionResult Show()
         {
-            return View(userModels);
+            List<UserModel> users = new List<UserModel>();
+            using (var db = new UserDbContext())
+            {
+                users = db.Users.Select(dbUser => new UserModel
+                {
+                    Id = dbUser.Id,
+                    Name = dbUser.Name,
+                    Email = dbUser.Email,
+                    Phone = dbUser.Phone
+                }).ToList();
+            }
+
+            return View(users);
         }
 
    
@@ -55,10 +68,7 @@ namespace FirstWebApplication.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var user = new UserModel
-            {
-                Id = userModels.Count + 1
-            };
+            var user = new UserModel();
 
             return View(user);
         }
@@ -68,6 +78,20 @@ namespace FirstWebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+               using (var db = new UserDbContext())
+                {
+                    var newlyCreatedUser = new User
+                    {
+                        Id = user.Id,
+                        Name = user.Name,
+                        Email = user.Email,
+                        Phone = user.Phone,
+                    };
+
+                    db.Users.Add(newlyCreatedUser);
+
+                    db.SaveChanges();
+                }
                 userModels.Add(user);
                 return RedirectToAction("Show");
             }

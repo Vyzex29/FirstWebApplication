@@ -14,5 +14,6 @@ namespace FirstWebApplication.Models
 
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
+
     }
 }

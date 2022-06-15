@@ -1,6 +1,5 @@
 ﻿@model UserModel
 
-<p>UserId: @Model.Id</p>
 <form class="col-6" asp-controller="User" asp-action="Create" method="post">
     @Html.HiddenFor(Model => Model.Id)
    <div class="mb-3">
